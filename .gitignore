@@ -1,5 +1,5 @@
 *.x
-a.out
+*.out
 *.mod
 core
 *.bin

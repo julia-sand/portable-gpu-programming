@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "axpy_helper_functions.h"
-
+#include <omp.h>
 
 int main(int argc, char* argv[]) {
     // Array size
@@ -35,8 +35,12 @@ int main(int argc, char* argv[]) {
 
     // Calculate axpy
     // TODO: Add OpenMP directives for GPU execution
+    #pragma omp target map(to: x[0:n]) map(tofrom: y[0:n])
+    #pragma omp teams parallel distribute for
     for (int i = 0; i < n; i++) {
         y[i] += alpha * x[i];
+        printf("team %3d/%3d\n",omp_get_team_num(),omp_get_num_teams());
+        printf("thread %3d/%3d\n",omp_get_thread_num(),omp_get_num_threads());
     }
 
     // Print output values

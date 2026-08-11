@@ -21,12 +21,15 @@ int main(int argc, char* argv[]) {
 
     // Initialization
     alpha = 3.0;
+    #pragma omp target enter data map(alloc: x[0:n],y[0:n])
+    #pragma omp target teams distribute parallel for
     for (int i = 0; i < n; i++) {
         double frac = 1.0 / ((double) (n - 1));
         x[i] = i * frac;
         y[i] = i * frac * 100;
     }
 
+    #pragma omp target update from(x[0:n],y[0:n])
     // Print input values
     printf("Input:\n");
     printf("a = %8.4f\n", alpha);
@@ -34,11 +37,11 @@ int main(int argc, char* argv[]) {
     print_array("y", y, n);
 
     // Calculate axpy
-    #pragma omp target teams distribute parallel for map(to: x[0:n]) map(tofrom: y[0:n])
+    #pragma omp target teams distribute parallel for
     for (int i = 0; i < n; i++) {
         y[i] += alpha * x[i];
     }
-
+    #pragma omp target exit data map(delete: x[0:n]) map(from: y[0:n])
     // Print output values
     printf("Output:\n");
     print_array("y", y, n);

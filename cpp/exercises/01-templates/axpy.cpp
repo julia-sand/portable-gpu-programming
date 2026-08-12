@@ -4,19 +4,9 @@
 
 #include <iostream>
 
-void axpy(double *x, double *y, double a, size_t n)
-{
-  // Apply axpy operation
-  for (size_t i = 0; i < n; i++) 
-  {
-    y[i] += a * x[i]; 
-  }
-}
-
-void axpy(float *x, float *y, float a, size_t n)
-{
-  // Apply axpy operation
-  for (size_t i = 0; i < n; i++) 
+template<typename T>
+void axpy(T *x, T *y, T a, size_t n) {
+for (size_t i = 0; i < n; i++) 
   {
     y[i] += a * x[i]; 
   }

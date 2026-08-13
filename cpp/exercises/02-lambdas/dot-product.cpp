@@ -5,6 +5,8 @@
 #include <iostream>
 #include <cmath>
 
+
+
 int main(int argc, char** argv)
 {
 
@@ -13,13 +15,18 @@ int main(int argc, char** argv)
   double *x = (double *) malloc(N * sizeof(double));
   double *y = (double *) malloc(N * sizeof(double));
 
+  //lambdas
+  auto lambda1 = [N](int i){return cos(i * 2*M_PI / (N-1) ); };
+  auto lambda2 = [N](int i){return sin(i * 2*M_PI / (N-1) ); };
+  
+
   // Initialize x and y
   // TODO: create here a lambda function for the loop body below, and
   // call it within the loop
   for (size_t i = 0; i < N; i++) 
   {
-    x[i] = cos(i * 2*M_PI / (N-1) );
-    y[i] = sin(i * 2*M_PI / (N-1) );
+    x[i] = lambda1(i);//cos(i * 2*M_PI / (N-1) ); 
+    y[i] = lambda2(i);//sin(i * 2*M_PI / (N-1) );
   }
 
   std::cout << "First and last elements before dot product: " << std::endl
@@ -28,11 +35,13 @@ int main(int argc, char** argv)
 
   // Perform dot product
   double result = 0.0;
+  auto lambda3 = [](double x, double y){return x*y; };
+  
   // TODO: create here a lambda function for the loop body below, and
   // call it within the loop
   for (size_t i = 0; i < N; i++) 
   {
-    result += x[i] * y[i];
+    result += lambda3(x[i],y[i]);
   }
 
   // Check results

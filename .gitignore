@@ -13,8 +13,9 @@ core
 *.stats.csv
 *.sysinfo.txt
 *.nsys-rep
-build/
+*build/
 slurm-*.out
 *.o
 *.png
-
+*build*
+*.sh

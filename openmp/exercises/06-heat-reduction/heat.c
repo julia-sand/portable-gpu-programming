@@ -81,30 +81,37 @@ void run(const int n, const int niter)
         unew = tmp;
 
         // Calculate average per quadrant
-        // TODO: Fix me
+        
         if (it % 100 == 0) {
             const int nx2 = nx / 2;
             const int ny2 = ny / 2;
             double avg[4] = {0.0, 0.0, 0.0, 0.0};
 
+
+            #pragma omp target map(tofrom:avg[0])
+#pragma omp teams distribute parallel for
             for (int i = 0; i < ny2; i++) {
                 for (int j = 0; j < nx2; j++) {
                     avg[0] += u[i * nx + j];
                 }
             }
 
+#pragma omp target map(tofrom:avg[1])
+#pragma omp teams distribute parallel for
             for (int i = 0; i < ny2; i++) {
                 for (int j = nx2; j < nx; j++) {
                     avg[1] += u[i * nx + j];
                 }
             }
-
+#pragma omp target map(tofrom:avg[2])
+#pragma omp teams distribute parallel for
             for (int i = ny2; i < ny; i++) {
                 for (int j = 0; j < nx2; j++) {
                     avg[2] += u[i * nx + j];
                 }
             }
-
+#pragma omp target map(tofrom:avg[3])
+#pragma omp teams distribute parallel for
             for (int i = ny2; i < ny; i++) {
                 for (int j = nx2; j < nx; j++) {
                     avg[3] += u[i * nx + j];

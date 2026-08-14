@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2025 CSC - IT Center for Science Ltd. <www.csc.fi>
+project_2019754 * SPDX-FileCopyrightText: 2025 CSC - IT Center for Science Ltd. <www.csc.fi>
  *
  * SPDX-License-Identifier: MIT
  */
@@ -37,6 +37,8 @@ int calculate_comm_count(const int nx_full, const int ny_full, const int rank, c
 
 static inline
 int calculate_comm_displ(const int nx, const int rank, const int ntasks) {
+    //allocate this
+    //
     if (rank == 0) {
         // Communicate also first line (global boundary) in first rank
         return 0;

@@ -63,6 +63,8 @@ void run(const int n, const int niter)
     for (int it = 1; it < niter + 1; it++) {
 
         // Stencil update
+        #pragma omp target data use_device_ptr(unew,u)
+
         evolve(unew, u, nx, ny, rx, ry);
 
         // Swap the arrays

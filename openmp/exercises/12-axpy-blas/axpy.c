@@ -48,8 +48,11 @@ int main(int argc, char* argv[]) {
         // Calculate axpy
         // TODO: This is broken. We need to pass
         //       the device pointers to this function call.
-        blas_daxpy(handle, n, &alpha, x, 1, y, 1);
-    }
+        #pragma omp target data use_device_ptr(x,y)
+        {
+           blas_daxpy(handle, n, &alpha, x, 1, y, 1);
+        }    
+}
 
     // Print output values
     printf("Output:\n");

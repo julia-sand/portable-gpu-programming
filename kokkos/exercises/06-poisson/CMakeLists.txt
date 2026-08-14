@@ -8,4 +8,8 @@ set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Build type")
 
 project(Poisson LANGUAGES CXX)
 
-add_executable(poisson poisson.cpp)
+find_package(Kokkos REQUIRED CONFIG)
+
+add_executable(poisson poisson_gpu.cpp)
+
+target_link_libraries(poisson PRIVATE Kokkos::kokkos)
